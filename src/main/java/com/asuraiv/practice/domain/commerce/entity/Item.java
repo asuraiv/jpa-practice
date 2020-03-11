@@ -7,17 +7,18 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Getter
 @Entity
-@Table(name = "item")
+@Table(name = "item", catalog = "jpa_practice")
 @NoArgsConstructor
 public class Item {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "item_id")
 	private Long id;
 

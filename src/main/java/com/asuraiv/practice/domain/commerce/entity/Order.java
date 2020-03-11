@@ -5,11 +5,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,12 +25,12 @@ import java.util.List;
 
 @Getter
 @Entity
-@Table(name = "order")
+@Table(name = "order", catalog = "jpa_practice")
 @NoArgsConstructor
 public class Order {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "order_id")
 	private Long id;
 
@@ -42,16 +44,17 @@ public class Order {
 	@Enumerated(EnumType.STRING)
 	private OrderStatus status;
 
-	@OneToMany(mappedBy = "order")
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	private List<OrderItem> orderItems = new ArrayList<>();
 
 	@Builder
-	public Order(Date orderedAt, OrderStatus status) {
+	public Order(Member member, Date orderedAt, OrderStatus status) {
 		this.orderedAt = orderedAt;
 		this.status = status;
+		this.setMember(member);
 	}
 
-	public void setMember(Member member) {
+	private void setMember(Member member) {
 
 		if(this.member != null) {
 			this.member.getOrders().remove(this);

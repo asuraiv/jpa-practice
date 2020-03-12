@@ -5,6 +5,7 @@ import com.asuraiv.practice.domain.commerce.entity.Item;
 import com.asuraiv.practice.domain.commerce.entity.Member;
 import com.asuraiv.practice.domain.commerce.entity.Order;
 import com.asuraiv.practice.domain.commerce.entity.OrderItem;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +20,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 @SpringBootTest
-public class CommerceTest {
+public class BasicTest {
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -80,6 +81,15 @@ public class CommerceTest {
 			.getResultList();
 
 		assertThat(foundList.get(0).getMember().getName(), is("홍길동"));
+	}
+
+	@BeforeEach
+	void resetAutoIncrementValue() {
+
+		entityManager.createNativeQuery("ALTER TABLE `member` AUTO_INCREMENT = 1").executeUpdate();
+		entityManager.createNativeQuery("ALTER TABLE `order` AUTO_INCREMENT = 1").executeUpdate();
+		entityManager.createNativeQuery("ALTER TABLE `order_item` AUTO_INCREMENT = 1").executeUpdate();
+		entityManager.createNativeQuery("ALTER TABLE `item` AUTO_INCREMENT = 1").executeUpdate();
 	}
 
 	private Member buildMember() {

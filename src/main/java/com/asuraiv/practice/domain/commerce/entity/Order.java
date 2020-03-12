@@ -34,7 +34,7 @@ public class Order {
 	@Column(name = "order_id")
 	private Long id;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "member_id")
 	private Member member;
 
@@ -65,7 +65,6 @@ public class Order {
 	}
 
 	public void addOrderItem(OrderItem orderItem) {
-		orderItems.add(orderItem);
 		orderItems.add(orderItem);
 	}
 }

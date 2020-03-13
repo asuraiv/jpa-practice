@@ -1,10 +1,9 @@
 package com.asuraiv.practice.domain.commerce;
 
-import com.asuraiv.practice.domain.commerce.constant.OrderStatus;
-import com.asuraiv.practice.domain.commerce.entity.Item;
 import com.asuraiv.practice.domain.commerce.entity.Member;
 import com.asuraiv.practice.domain.commerce.entity.Order;
 import com.asuraiv.practice.domain.commerce.entity.OrderItem;
+import com.asuraiv.practice.domain.commerce.helper.EntityMaker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.Date;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -30,12 +28,7 @@ public class BasicTest {
 	@Transactional
 	public void 회원_생성_및_조회_테스트() {
 
-		Member member = Member.builder()
-			.name("홍길동")
-			.city("서울시")
-			.street("을지로")
-			.zipcode("9999")
-			.build();
+		Member member = EntityMaker.buildMember();
 
 		entityManager.persist(member);
 
@@ -48,11 +41,11 @@ public class BasicTest {
 	@Transactional
 	public void 주문_객체_그래프_탐색() {
 
-		Member member = buildMember();
+		Member member = EntityMaker.buildMember();
 
 		entityManager.persist(member);
 
-		Order order = buildOrder(member);
+		Order order = EntityMaker.buildOrder(member);
 
 		entityManager.persist(order);
 
@@ -67,11 +60,11 @@ public class BasicTest {
 	@Transactional
 	public void JPQL_조회() {
 
-		Member member = buildMember();
+		Member member = EntityMaker.buildMember();
 
 		entityManager.persist(member);
 
-		Order order = buildOrder(member);
+		Order order = EntityMaker.buildOrder(member);
 
 		entityManager.persist(order);
 
@@ -88,11 +81,11 @@ public class BasicTest {
 	@Transactional
 	public void 연관관계_저장_실패() {
 
-		OrderItem orderItem = buildOrderItem(null);
+		OrderItem orderItem = EntityMaker.buildOrderItem(null);
 
 		entityManager.persist(orderItem);
 
-		Order order = buildOrder();
+		Order order = EntityMaker.buildOrder();
 
 		order.addOrderItem(orderItem);
 
@@ -117,50 +110,5 @@ public class BasicTest {
 		entityManager.createNativeQuery("ALTER TABLE `item` AUTO_INCREMENT = 1").executeUpdate();
 	}
 
-	private Member buildMember() {
 
-		return Member.builder()
-			.name("홍길동")
-			.city("서울시")
-			.street("을지로")
-			.zipcode("9999")
-			.build();
-	}
-
-	private Order buildOrder() {
-
-		return Order.builder()
-			.orderedAt(new Date())
-			.status(OrderStatus.ORDER)
-			.member(buildMember())
-			.build();
-	}
-
-	private Order buildOrder(Member member) {
-
-		Order order = Order.builder()
-			.member(member)
-			.orderedAt(new Date())
-			.status(OrderStatus.ORDER)
-			.build();
-
-		order.addOrderItem(buildOrderItem(order));
-
-		return order;
-	}
-
-	private OrderItem buildOrderItem(Order order) {
-
-		return OrderItem.builder()
-			.item(Item.builder()
-				.name("KF마스크")
-				.price(1000)
-				.stockQuantity(10)
-				.build()
-			)
-			.order(order)
-			.count(10)
-			.orderPrice(10000)
-			.build();
-	}
 }

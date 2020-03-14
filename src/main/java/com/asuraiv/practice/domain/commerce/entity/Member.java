@@ -40,7 +40,7 @@ public class Member {
 	@OneToMany(mappedBy = "member")
 	private List<Order> orders = new ArrayList<>();
 
-	@ManyToMany(cascade = CascadeType.PERSIST)
+	@ManyToMany(cascade = {CascadeType.PERSIST})
 	@JoinTable(name = "member_product",
 		joinColumns = @JoinColumn(name = "member_id"),
 		inverseJoinColumns = @JoinColumn(name = "product_id")

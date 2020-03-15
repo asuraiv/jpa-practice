@@ -25,6 +25,15 @@ public class EntityMaker {
 			.build();
 	}
 
+	public static Order buildOnlyOrder(Member member) {
+
+		return Order.builder()
+			.orderedAt(new Date())
+			.status(OrderStatus.ORDER)
+			.member(member)
+			.build();
+	}
+
 	public static Order buildOrder() {
 
 		return Order.builder()

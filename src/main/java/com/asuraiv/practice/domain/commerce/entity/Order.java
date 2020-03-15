@@ -34,7 +34,7 @@ public class Order {
 	@Column(name = "order_id")
 	private Long id;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "member_id")
 	private Member member;
 
@@ -54,14 +54,16 @@ public class Order {
 		this.setMember(member);
 	}
 
-	private void setMember(Member member) {
+	public void setMember(Member member) {
 
 		if(this.member != null) {
 			this.member.getOrders().remove(this);
 		}
 
 		this.member = member;
-		member.getOrders().add(this);
+		if(member != null) {
+			member.getOrders().add(this);
+		}
 	}
 
 	public void addOrderItem(OrderItem orderItem) {

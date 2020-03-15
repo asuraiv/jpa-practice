@@ -37,7 +37,7 @@ public class Member {
 
 	private String zipcode;
 
-	@OneToMany(mappedBy = "member")
+	@OneToMany(mappedBy = "member", orphanRemoval = true, cascade = CascadeType.ALL)
 	private List<Order> orders = new ArrayList<>();
 
 	@ManyToMany(cascade = {CascadeType.PERSIST})
@@ -62,5 +62,11 @@ public class Member {
 		if(!product.getMembers().contains(this)) {
 			product.getMembers().add(this);
 		}
+	}
+	public void addOrder(Order order) {
+
+		orders.add(order);
+
+		order.setMember(this);
 	}
 }

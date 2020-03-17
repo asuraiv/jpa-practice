@@ -24,14 +24,14 @@ public class ManyToManyTest {
 	@Transactional
 	public void 다대다_저장_및_조회_테스트() {
 
-		Member member1 = EntityMaker.buildMember();
-		member1.addProduct(EntityMaker.buildProduct());
+		Member member = EntityMaker.buildMember();
+		member.addProduct(EntityMaker.buildProduct());
 
-		entityManager.persist(member1);
+		entityManager.persist(member);
 
-		Member member = entityManager.find(Member.class, 1L);
+		Member foundOne = entityManager.find(Member.class, 1L);
 
-		assertThat(member.getProducts().get(0).getName(), is("KF마스크"));
+		assertThat(foundOne.getProducts().get(0).getName(), is("KF마스크"));
 	}
 
 	@Test

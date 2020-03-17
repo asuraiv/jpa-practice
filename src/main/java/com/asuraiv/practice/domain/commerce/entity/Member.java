@@ -16,13 +16,14 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Getter
 @Entity
 @Table(name = "member", catalog = "jpa_practice")
 @NoArgsConstructor
-public class Member {
+public class Member extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,7 +49,9 @@ public class Member {
 	private List<Product> products = new ArrayList<>();
 
 	@Builder
-	public Member(String name, String city, String street, String zipcode) {
+	public Member(Date createdAt, Date updatedAt, String name, String city, String street, String zipcode) {
+
+		super(createdAt, updatedAt);
 		this.name = name;
 		this.city = city;
 		this.street = street;

@@ -1,7 +1,7 @@
 package com.asuraiv.practice.domain.commerce.helper;
 
 import com.asuraiv.practice.domain.commerce.constant.OrderStatus;
-import com.asuraiv.practice.domain.commerce.entity.Item;
+import com.asuraiv.practice.domain.commerce.entity.Book;
 import com.asuraiv.practice.domain.commerce.entity.Member;
 import com.asuraiv.practice.domain.commerce.entity.Order;
 import com.asuraiv.practice.domain.commerce.entity.OrderItem;
@@ -17,7 +17,11 @@ public class EntityMaker {
 
 	public static Member buildMember(String name) {
 
+		Date createdAt = new Date();
+
 		return Member.builder()
+			.createdAt(createdAt)
+			.updatedAt(createdAt)
 			.name(name)
 			.city("서울시")
 			.street("을지로")
@@ -59,14 +63,9 @@ public class EntityMaker {
 	public static OrderItem buildOrderItem(Order order) {
 
 		return OrderItem.builder()
-			.item(Item.builder()
-				.name("KF마스크")
-				.price(1000)
-				.stockQuantity(10)
-				.build()
-			)
+			.item(buildBook())
 			.order(order)
-			.count(10)
+			.count(1)
 			.orderPrice(10000)
 			.build();
 	}
@@ -75,6 +74,16 @@ public class EntityMaker {
 		return Product.builder()
 			.id("product001")
 			.name("KF마스크")
+			.build();
+	}
+
+	public static Book buildBook() {
+		return Book.builder()
+			.name("노인과바다")
+			.author("해밍웨이")
+			.isbn("123123")
+			.price(10000)
+			.stockQuantity(10)
 			.build();
 	}
 }

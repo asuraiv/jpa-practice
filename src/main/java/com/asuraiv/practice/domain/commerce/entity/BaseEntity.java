@@ -1,6 +1,5 @@
 package com.asuraiv.practice.domain.commerce.entity;
 
-import com.mysql.cj.conf.PropertyDefinitions;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

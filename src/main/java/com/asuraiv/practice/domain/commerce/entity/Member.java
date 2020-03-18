@@ -1,12 +1,15 @@
 package com.asuraiv.practice.domain.commerce.entity;
 
+import com.asuraiv.practice.domain.commerce.entity.embeddable.Address;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,13 +35,10 @@ public class Member extends BaseEntity {
 
 	private String name;
 
-	private String city;
+	@Embedded
+	private Address address;
 
-	private String street;
-
-	private String zipcode;
-
-	@OneToMany(mappedBy = "member", orphanRemoval = true, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "member", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Order> orders = new ArrayList<>();
 
 	@ManyToMany(cascade = {CascadeType.PERSIST})
@@ -53,9 +53,11 @@ public class Member extends BaseEntity {
 
 		super(createdAt, updatedAt);
 		this.name = name;
-		this.city = city;
-		this.street = street;
-		this.zipcode = zipcode;
+		this.address = Address.builder()
+			.city(city)
+			.street(street)
+			.zipcode(zipcode)
+			.build();
 	}
 
 	public void addProduct(Product product) {

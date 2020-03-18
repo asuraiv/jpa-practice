@@ -38,7 +38,7 @@ public class LazyTest {
 
 		entityManager.persist(member);
 
-		Member proxy = entityManager.getReference(Member.class, 1L);
+		Member proxy = entityManager.getReference(Member.class, member.getId());
 
 		assertTrue(proxy instanceof HibernateProxy);
 	}
@@ -61,7 +61,7 @@ public class LazyTest {
 
 			transaction.commit();
 
-			Member proxy = localEntityManager.getReference(Member.class, 1L);
+			Member proxy = localEntityManager.getReference(Member.class, member.getId());
 
 			localEntityManager.close();
 
@@ -85,7 +85,7 @@ public class LazyTest {
 
 		entityManager.flush();
 
-		Order foundOne = entityManager.find(Order.class, 1L);
+		Order foundOne = entityManager.find(Order.class, order.getId());
 
 		assertNull(foundOne);
 	}

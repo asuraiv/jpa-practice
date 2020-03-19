@@ -6,7 +6,6 @@ import com.asuraiv.practice.domain.commerce.helper.EntityMaker;
 import org.hibernate.LazyInitializationException;
 import org.hibernate.proxy.HibernateProxy;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -38,6 +37,8 @@ public class LazyTest {
 
 		entityManager.persist(member);
 
+		entityManager.clear();
+
 		Member proxy = entityManager.getReference(Member.class, member.getId());
 
 		assertTrue(proxy instanceof HibernateProxy);
@@ -60,6 +61,8 @@ public class LazyTest {
 			localEntityManager.persist(member);
 
 			transaction.commit();
+
+			localEntityManager.clear();
 
 			Member proxy = localEntityManager.getReference(Member.class, member.getId());
 
@@ -88,12 +91,5 @@ public class LazyTest {
 		Order foundOne = entityManager.find(Order.class, order.getId());
 
 		assertNull(foundOne);
-	}
-
-	@BeforeEach
-	void resetAutoIncrementValue() {
-
-		entityManager.createNativeQuery("ALTER TABLE `member` AUTO_INCREMENT = 1").executeUpdate();
-		entityManager.createNativeQuery("ALTER TABLE `order` AUTO_INCREMENT = 1").executeUpdate();
 	}
 }

@@ -2,7 +2,6 @@ package com.asuraiv.practice.domain.commerce;
 
 import com.asuraiv.practice.domain.commerce.entity.Member;
 import com.asuraiv.practice.domain.commerce.helper.EntityMaker;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +28,7 @@ public class ManyToManyTest {
 
 		entityManager.persist(member);
 
-		Member foundOne = entityManager.find(Member.class, 1L);
+		Member foundOne = entityManager.find(Member.class, member.getId());
 
 		assertThat(foundOne.getProducts().get(0).getName(), is("KF마스크"));
 	}
@@ -50,16 +49,9 @@ public class ManyToManyTest {
 
 		entityManager.flush();
 
-		Member foundOne1 = entityManager.find(Member.class, 1L);
-		Member foundOne2 = entityManager.find(Member.class, 2L);
+		Member foundOne1 = entityManager.find(Member.class, member1.getId());
+		Member foundOne2 = entityManager.find(Member.class, member2.getId());
 
 		assertEquals(foundOne1.getProducts().get(0), foundOne2.getProducts().get(0));
-	}
-
-	@BeforeEach
-	void resetAutoIncrementValue() {
-
-		entityManager.createNativeQuery("ALTER TABLE `member` AUTO_INCREMENT = 1").executeUpdate();
-		entityManager.createNativeQuery("ALTER TABLE `product` AUTO_INCREMENT = 1").executeUpdate();
 	}
 }

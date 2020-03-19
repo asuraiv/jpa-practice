@@ -4,7 +4,6 @@ import com.asuraiv.practice.domain.commerce.entity.Book;
 import com.asuraiv.practice.domain.commerce.entity.Item;
 import com.asuraiv.practice.domain.commerce.entity.Member;
 import com.asuraiv.practice.domain.commerce.helper.EntityMaker;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +29,7 @@ public class InheritanceTest {
 
 		entityManager.persist(book);
 
-		Item item = entityManager.find(Item.class, 1L);
+		Item item = entityManager.find(Item.class, book.getId());
 
 		Book foundOne = (Book) item;
 
@@ -45,16 +44,9 @@ public class InheritanceTest {
 
 		entityManager.persist(member);
 
-		Member foundOne = entityManager.find(Member.class, 1L);
+		Member foundOne = entityManager.find(Member.class, member.getId());
 
 		assertNotNull(foundOne.getCreatedAt());
 		assertNotNull(foundOne.getUpdatedAt());
-	}
-
-	@BeforeEach
-	void resetAutoIncrementValue() {
-
-		entityManager.createNativeQuery("ALTER TABLE `item` AUTO_INCREMENT = 1").executeUpdate();
-		entityManager.createNativeQuery("ALTER TABLE `member` AUTO_INCREMENT = 1").executeUpdate();
 	}
 }

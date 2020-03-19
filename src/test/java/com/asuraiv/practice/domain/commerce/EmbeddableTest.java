@@ -2,10 +2,8 @@ package com.asuraiv.practice.domain.commerce;
 
 import com.asuraiv.practice.domain.commerce.entity.Member;
 import com.asuraiv.practice.domain.commerce.entity.embeddable.Address;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -13,7 +11,8 @@ import javax.persistence.PersistenceContext;
 import java.util.Date;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
 @SpringBootTest
 public class EmbeddableTest {
@@ -38,15 +37,10 @@ public class EmbeddableTest {
 
 		entityManager.persist(member);
 
-		Member foundOne = entityManager.find(Member.class, 1L);
+		Member foundOne = entityManager.find(Member.class, member.getId());
 
 		Address address = foundOne.getAddress();
 		assertNotNull(address);
 		assertThat(address.getCity(), is("이천시"));
-	}
-
-	@BeforeEach
-	void resetAutoIncrementValue() {
-		entityManager.createNativeQuery("ALTER TABLE `member` AUTO_INCREMENT = 1").executeUpdate();
 	}
 }

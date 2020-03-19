@@ -4,7 +4,6 @@ import com.asuraiv.practice.domain.commerce.entity.Member;
 import com.asuraiv.practice.domain.commerce.entity.Order;
 import com.asuraiv.practice.domain.commerce.entity.OrderItem;
 import com.asuraiv.practice.domain.commerce.helper.EntityMaker;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,11 +48,11 @@ public class BasicTest {
 
 		entityManager.persist(order);
 
-		Order foundOne = entityManager.find(Order.class, 1L);
+		Order foundOne = entityManager.find(Order.class, order.getId());
 
 		assertNotNull(foundOne.getMember());
 		assertThat(foundOne.getMember().getName(), is("홍길동"));
-		assertThat(foundOne.getOrderItems().get(0).getItem().getName(), is("KF마스크"));
+		assertThat(foundOne.getOrderItems().get(0).getItem().getName(), is("노인과바다"));
 	}
 
 	@Test
@@ -71,7 +70,7 @@ public class BasicTest {
 		String jpql = "select o from Order o join o.member m where m.id = :memberId";
 
 		List<Order> foundList = entityManager.createQuery(jpql, Order.class)
-			.setParameter("memberId", 1L)
+			.setParameter("memberId", member.getId())
 			.getResultList();
 
 		assertThat(foundList.get(0).getMember().getName(), is("홍길동"));
@@ -100,15 +99,4 @@ public class BasicTest {
 		// order는 owner side가 아니기 때문이다.
 		assertNull(orderItems.get(0).getOrder());
 	}
-
-	@BeforeEach
-	void resetAutoIncrementValue() {
-
-		entityManager.createNativeQuery("ALTER TABLE `member` AUTO_INCREMENT = 1").executeUpdate();
-		entityManager.createNativeQuery("ALTER TABLE `order` AUTO_INCREMENT = 1").executeUpdate();
-		entityManager.createNativeQuery("ALTER TABLE `order_item` AUTO_INCREMENT = 1").executeUpdate();
-		entityManager.createNativeQuery("ALTER TABLE `item` AUTO_INCREMENT = 1").executeUpdate();
-	}
-
-
 }

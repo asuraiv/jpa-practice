@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -44,7 +45,13 @@ public class LazyTest {
 		assertTrue(proxy instanceof HibernateProxy);
 	}
 
+	/*
+		아래 테스트는 공유 트랜잭션 매니저가 아닌 개별 트랜잭션 매니저로 테스트 해야함.
+		또한 예외 발생 테스트로서, 롤백이 어려우므로,  assertion 후에 공용 entityManager로 delete query를 이용해
+		tear down을 해야하므로 rollback = false로 설정함.
+	 */
 	@Test
+	@Rollback(false)
 	@Transactional
 	public void 프록시_초기화_예외() {
 
@@ -62,14 +69,18 @@ public class LazyTest {
 
 			transaction.commit();
 
-			localEntityManager.clear();
+			localEntityManager.clear(); // 영속성 컨텍스트를 비워서 proxy가 반환되게 한다.
 
+			// 영속성 컨텍스트에 찾는 엔티티 객체가 있으면 getReference 메서드 호출이라도 proxy가 아닌 실제 엔티티를 반환한
 			Member proxy = localEntityManager.getReference(Member.class, member.getId());
 
-			localEntityManager.close();
+			localEntityManager.close(); // 영속성 컨텍스트 종료
 
 			proxy.getName(); // 영속성 컨텍스트는 이미 종료되었으므로, 프록시 초기화 예외 발생
 		});
+
+		entityManager.createNativeQuery("DELETE FROM `member` WHERE member_id > 0")
+			.executeUpdate();
 	}
 
 	@Test

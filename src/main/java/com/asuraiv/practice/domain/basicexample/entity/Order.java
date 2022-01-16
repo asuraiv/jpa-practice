@@ -1,6 +1,6 @@
-package com.asuraiv.practice.domain.commerce.entity;
+package com.asuraiv.practice.domain.basicexample.entity;
 
-import com.asuraiv.practice.domain.commerce.constant.OrderStatus;
+import com.asuraiv.practice.domain.basicexample.constant.OrderStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

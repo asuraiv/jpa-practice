@@ -1,9 +1,9 @@
-package com.asuraiv.practice.domain.commerce;
+package com.asuraiv.practice.domain.basicexample;
 
-import com.asuraiv.practice.domain.commerce.entity.Book;
-import com.asuraiv.practice.domain.commerce.entity.Item;
-import com.asuraiv.practice.domain.commerce.entity.Member;
-import com.asuraiv.practice.domain.commerce.helper.EntityMaker;
+import com.asuraiv.practice.domain.basicexample.entity.Book;
+import com.asuraiv.practice.domain.basicexample.entity.Item;
+import com.asuraiv.practice.domain.basicexample.entity.Member;
+import com.asuraiv.practice.domain.basicexample.helper.EntityMaker;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;

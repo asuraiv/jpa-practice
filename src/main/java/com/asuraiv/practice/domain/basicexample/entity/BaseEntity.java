@@ -1,4 +1,4 @@
-package com.asuraiv.practice.domain.commerce.entity;
+package com.asuraiv.practice.domain.basicexample.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

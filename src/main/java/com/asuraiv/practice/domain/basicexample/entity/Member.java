@@ -1,6 +1,6 @@
-package com.asuraiv.practice.domain.commerce.entity;
+package com.asuraiv.practice.domain.basicexample.entity;
 
-import com.asuraiv.practice.domain.commerce.entity.embeddable.Address;
+import com.asuraiv.practice.domain.basicexample.entity.embeddable.Address;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

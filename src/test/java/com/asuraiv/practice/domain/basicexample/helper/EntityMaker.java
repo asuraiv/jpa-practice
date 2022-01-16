@@ -1,11 +1,11 @@
-package com.asuraiv.practice.domain.commerce.helper;
+package com.asuraiv.practice.domain.basicexample.helper;
 
-import com.asuraiv.practice.domain.commerce.constant.OrderStatus;
-import com.asuraiv.practice.domain.commerce.entity.Book;
-import com.asuraiv.practice.domain.commerce.entity.Member;
-import com.asuraiv.practice.domain.commerce.entity.Order;
-import com.asuraiv.practice.domain.commerce.entity.OrderItem;
-import com.asuraiv.practice.domain.commerce.entity.Product;
+import com.asuraiv.practice.domain.basicexample.constant.OrderStatus;
+import com.asuraiv.practice.domain.basicexample.entity.Book;
+import com.asuraiv.practice.domain.basicexample.entity.Member;
+import com.asuraiv.practice.domain.basicexample.entity.Order;
+import com.asuraiv.practice.domain.basicexample.entity.OrderItem;
+import com.asuraiv.practice.domain.basicexample.entity.Product;
 
 import java.util.Date;
 

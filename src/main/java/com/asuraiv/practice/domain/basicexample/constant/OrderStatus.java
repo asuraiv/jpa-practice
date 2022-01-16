@@ -1,4 +1,4 @@
-package com.asuraiv.practice.domain.commerce.constant;
+package com.asuraiv.practice.domain.basicexample.constant;
 
 public enum OrderStatus {
 	ORDER, CANCEL

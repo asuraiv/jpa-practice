@@ -1,4 +1,4 @@
-package com.asuraiv.practice.domain.commerce.entity.embeddable;
+package com.asuraiv.practice.domain.basicexample.entity.embeddable;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,8 +1,8 @@
-package com.asuraiv.practice.domain.commerce;
+package com.asuraiv.practice.domain.basicexample;
 
-import com.asuraiv.practice.domain.commerce.entity.Member;
-import com.asuraiv.practice.domain.commerce.entity.Order;
-import com.asuraiv.practice.domain.commerce.helper.EntityMaker;
+import com.asuraiv.practice.domain.basicexample.entity.Member;
+import com.asuraiv.practice.domain.basicexample.entity.Order;
+import com.asuraiv.practice.domain.basicexample.helper.EntityMaker;
 import org.hibernate.LazyInitializationException;
 import org.hibernate.proxy.HibernateProxy;
 import org.junit.jupiter.api.Assertions;
